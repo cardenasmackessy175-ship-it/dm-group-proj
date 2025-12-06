@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+__MACOSX/
+*.bak
+
+# Project specific
+MDS5020-Group Project - v0.2/
+Subtask2.1-sentiment_analysis/training_news-sentiment.xlsx
+Subtask2.1-sentiment_analysis/local_test.py
+Subtask2.1-sentiment_analysis/final_model_generate.py
+Subtask2.1-sentiment_analysis/model_tests.ipynb
+Subtask2.1-sentiment_analysis/.ipynb_checkpoints/
+Subtask2.1-sentiment_analysis/readme.txt
+subtask2.2_topic_model/data/
+subtask2.2_topic_model/*.ipynb
+subtask2.2_topic_model/topic_model_dev.py
+subtask2.2_topic_model/topic_model_test.py
+subtask2.2_topic_model/readme.txt
+test_api.py
+CLAUDE.md
+
+# Git
+.git/
+.gitignore
