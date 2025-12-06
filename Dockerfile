@@ -1,6 +1,5 @@
 # Use slim Python image to minimize size
-# Using Alibaba Cloud mirror for faster and more reliable access
-FROM registry.cn-hangzhou.aliyuncs.com/library/python:3.9-slim
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
