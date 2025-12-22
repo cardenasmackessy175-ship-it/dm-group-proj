@@ -52,7 +52,7 @@ Flask-based REST API for financial news sentiment analysis and topic classificat
 **Response:**
 ```json
 {
-  "label": "12",         // Topic ID: "1" to "18"
+  "topic": "12",         // Topic ID: "1" to "18"
   "probability": "0.63"
 }
 ```

@@ -195,10 +195,9 @@ def predict_topic():
         # Convert 0-indexed prediction to 1-indexed topic ID
         topic_id = str(prediction + 1)
 
-        # Format output
-        # Note: PDF specifies "topic" but evaluation script may expect "label"
+        # Format output (PDF and evaluation both expect "topic")
         result = {
-            "label": topic_id,  # Changed from "topic" to "label" for evaluation compatibility
+            "topic": topic_id,
             "probability": f"{probability:.2f}"
         }
 
