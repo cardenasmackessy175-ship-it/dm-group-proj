@@ -72,11 +72,10 @@ def clean_text(text: str) -> str:
 
 # IMPORTANT: Make clean_text available in __main__ for pickle deserialization
 # This fixes the "Can't get attribute 'clean_text' on <module '__main__'>" error
-if __name__ != '__main__':
-    # When running under Gunicorn, inject functions into __main__
-    import __main__
-    __main__.clean_text = clean_text
-    __main__.strQ2B = strQ2B
+import __main__
+__main__.clean_text = clean_text
+__main__.strQ2B = strQ2B
+logger.info(f"Injected clean_text and strQ2B into __main__ (module name: {__name__})")
 
 
 def load_models():
@@ -168,7 +167,14 @@ def predict_topic():
             logger.info("Loading topic classification model...")
             model_data = joblib.load('subtask2.2_topic_model/topic_classification_model_subtask2.2.joblib')
             topic_model = model_data['model']
-            logger.info("Topic model loaded successfully")
+            logger.info(f"Topic model loaded successfully. Type: {type(topic_model)}")
+
+            # Verify the model has required components
+            if hasattr(topic_model, 'named_steps'):
+                logger.info(f"Pipeline steps: {list(topic_model.named_steps.keys())}")
+                if 'tfidf' in topic_model.named_steps:
+                    tfidf = topic_model.named_steps['tfidf']
+                    logger.info(f"TfidfVectorizer fitted: {hasattr(tfidf, 'idf_')}")
 
         # Get input data
         data = request.get_json()
@@ -179,12 +185,9 @@ def predict_topic():
         if not isinstance(news_text, str) or not news_text.strip():
             return jsonify({"error": "Invalid 'news_text' value"}), 400
 
-        # Preprocess text before prediction (workaround for pickle serialization)
-        cleaned_text = clean_text(news_text)
-
-        # Predict
-        prediction = topic_model.predict([cleaned_text])[0]
-        probabilities = topic_model.predict_proba([cleaned_text])[0]
+        # Predict (model's internal preprocessor will handle text cleaning)
+        prediction = topic_model.predict([news_text])[0]
+        probabilities = topic_model.predict_proba([news_text])[0]
 
         # Get probability of predicted class
         probability = float(probabilities[prediction])
